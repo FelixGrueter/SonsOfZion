@@ -1211,7 +1211,20 @@
     /* ============================================
        REVEAL ANIMATION
        ============================================ */
-    /* reveal class: initial state set by GSAP, not CSS */
+    /* ============================================
+       LANGUAGE SWITCHER
+       ============================================ */
+    .lang-switcher { display: flex; align-items: center; gap: 2px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(240, 237, 232, 0.1); border-radius: 3px; padding: 3px; }
+    .lang-btn { display: flex; align-items: center; gap: 5px; padding: 0.35em 0.65em; border-radius: 2px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); background: transparent; border: none; cursor: pointer; transition: color 0.2s, background 0.2s; white-space: nowrap; }
+    .lang-btn:hover { color: var(--white); background: rgba(240, 237, 232, 0.08); }
+    .lang-btn.active { color: var(--black); background: var(--gold); font-weight: 700; }
+    .lang-flag { font-size: 1rem; line-height: 1; }
+    .lang-code { font-size: 0.7rem; letter-spacing: 0.06em; font-family: var(--font-mono); }
+    .lang-switcher--mobile { margin-right: auto; margin-left: 2rem; background: rgba(255, 255, 255, 0.05); border-color: rgba(240, 237, 232, 0.15); padding: 4px; gap: 4px; border-radius: 4px; display: inline-flex; }
+    .lang-switcher--mobile .lang-btn { padding: 0.55em 1em; font-size: 0.8rem; gap: 6px; }
+    .lang-switcher--mobile .lang-flag { font-size: 1.2rem; }
+    .lang-switcher--mobile .lang-code { font-size: 0.78rem; }
+    @media (max-width: 768px) { .nav-desktop-switcher { display: none; } }
   </style>
 </head>
 
@@ -1222,11 +1235,16 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu">
     <ul>
-      <li><a href="#vision">Vision</a></li>
-      <li><a href="#format">Formate</a></li>
-      <li><a href="#leiterschaft">Leiterschaft</a></li>
-      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a href="#vision" data-i18n="nav_vision">Vision</a></li>
+      <li><a href="#format" data-i18n="nav_formats">Formate</a></li>
+      <li><a href="#leiterschaft" data-i18n="nav_leadership">Leiterschaft</a></li>
+      <li><a href="#kontakt" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
+    <div class="lang-switcher lang-switcher--mobile">
+      <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
+      <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span></button>
+      <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span class="lang-code">IT</span></button>
+    </div>
   </div>
 
   <!-- NAVIGATION -->
@@ -1236,13 +1254,18 @@
         <img src="assets/images/sonsofzion-logo.jpg" alt="Sons of Zion Logo" />
       </a>
       <ul class="nav-links">
-        <li><a href="#vision">Vision</a></li>
-        <li><a href="#format">Formate</a></li>
-        <li><a href="#leiterschaft">Leiterschaft</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#vision" data-i18n="nav_vision">Vision</a></li>
+        <li><a href="#format" data-i18n="nav_formats">Formate</a></li>
+        <li><a href="#leiterschaft" data-i18n="nav_leadership">Leiterschaft</a></li>
+        <li><a href="#kontakt" data-i18n="nav_contact">Kontakt</a></li>
       </ul>
+      <div class="lang-switcher nav-desktop-switcher">
+        <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
+        <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span></button>
+        <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span class="lang-code">IT</span></button>
+      </div>
       <div class="nav-cta">
-        <a href="mailto:info@sons-of-zion.org" target="_blank">[ Dazukommen ]</a>
+        <a href="mailto:info@sons-of-zion.org" target="_blank" data-i18n="nav_join">[ Dazukommen ]</a>
       </div>
       <div class="hamburger">
         <span></span>
@@ -1254,14 +1277,14 @@
 
   <!-- HERO SECTION -->
   <section id="hero">
-    <h1 class="hero-title reveal">Werde wer du<br><em>wirklich bist</em></h1>
-    <p class="hero-subtitle reveal">
+    <h1 class="hero-title reveal" data-i18n="hero_title">Werde wer du<br><em>wirklich bist</em></h1>
+    <p class="hero-subtitle reveal" data-i18n="hero_subtitle">
       Ein transformierendes Netzwerk für Jüngerschaft,<br>
       Leiterschaft und echte Beziehung.
     </p>
-    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal">[ Dazukommen ]</a>
+    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal" data-i18n="nav_join">[ Dazukommen ]</a>
     <div class="scroll-indicator">
-      <span>Scroll</span>
+      <span data-i18n="hero_scroll">Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
@@ -1269,37 +1292,33 @@
   <!-- QUOTE 1 -->
   <section id="quote1">
     <div class="container">
-      <blockquote class="quote-text reveal">
+      <blockquote class="quote-text reveal" data-i18n="quote_1">
         „Was kein Auge gesehen und kein Ohr gehört hat und in keines Menschen Herz gekommen ist, was Gott bereitet hat
         denen, <strong>die ihn lieben.</strong>"
-        <cite class="quote-ref">— 1. Korinther 2,9</cite>
       </blockquote>
+      <cite class="quote-ref" data-i18n="quote_1_ref">— 1. Korinther 2,9</cite>
     </div>
   </section>
 
   <!-- VISION SECTION -->
   <section id="vision">
     <div class="container">
-      <span class="section-label reveal">Unsere Vision</span>
+      <span class="section-label reveal" data-i18n="vis_label">Unsere Vision</span>
       <div class="vision-grid">
         <div class="vision-item reveal">
           <span class="vision-number">01</span>
-          <h3>Echte Beziehung</h3>
-          <p>Nicht Programme, sondern echtes Kennen. Echtes Interesse am Herzen des anderen – an dem, was Gott in deinem
-            Leben tun will. Beziehung auf Augenhöhe, mit Verantwortung füreinander.</p>
+          <h3 data-i18n="vis_1_title">Echte Beziehung</h3>
+          <p data-i18n="vis_1_desc">Nicht Programme, sondern echtes Kennen. Echtes Interesse am Herzen des anderen – an dem, was Gott in deinem Leben tun will. Beziehung auf Augenhöhe, mit Verantwortung füreinander.</p>
         </div>
         <div class="vision-item reveal">
           <span class="vision-number">02</span>
-          <h3>Lebendige Jüngerschaft</h3>
-          <p>Jesus selbst ist unser Lehrer durch seinen Heiligen Geist. Kein festgefahrener Lehrplan, sondern eine
-            lebendige Schule. Nicht aus eigener Kraft, sondern durch sein Blut werden wir transformiert in dasselbe
-            Bild.</p>
+          <h3 data-i18n="vis_2_title">Lebendige Jüngerschaft</h3>
+          <p data-i18n="vis_2_desc">Jesus selbst ist unser Lehrer durch seinen Heiligen Geist. Kein festgefahrener Lehrplan, sondern eine lebendige Schule. Nicht aus eigener Kraft, sondern durch sein Blut werden wir transformiert in dasselbe Bild.</p>
         </div>
         <div class="vision-item reveal">
           <span class="vision-number">03</span>
-          <h3>Identität in Christus</h3>
-          <p>Charakter. Gebet. Prophetie. Zurüstung. Wir entdecken gemeinsam, wer wir in Christus wirklich sind – und
-            gehen hinaus, um zu leuchten.</p>
+          <h3 data-i18n="vis_3_title">Identität in Christus</h3>
+          <p data-i18n="vis_3_desc">Charakter. Gebet. Prophetie. Zurüstung. Wir entdecken gemeinsam, wer wir in Christus wirklich sind – und gehen hinaus, um zu leuchten.</p>
         </div>
       </div>
     </div>
@@ -1309,59 +1328,52 @@
   <section id="kernwerte">
     <div class="container">
       <div class="kernwerte-values reveal">
-        <div class="kernwerte-value">Freundschaft</div>
-        <div class="kernwerte-value">Tiefgang</div>
-        <div class="kernwerte-value">Wahrheit</div>
-        <div class="kernwerte-value">Authentizität</div>
-        <div class="kernwerte-value">Transformation</div>
+        <div class="kernwerte-value" data-i18n="val_1">Freundschaft</div>
+        <div class="kernwerte-value" data-i18n="val_2">Tiefgang</div>
+        <div class="kernwerte-value" data-i18n="val_3">Wahrheit</div>
+        <div class="kernwerte-value" data-i18n="val_4">Authentizität</div>
+        <div class="kernwerte-value" data-i18n="val_5">Transformation</div>
       </div>
-      <blockquote class="kernwerte-verse reveal">
+      <blockquote class="kernwerte-verse reveal" data-i18n="val_quote">
         „Seid so unter euch gesinnt, wie es der Gemeinschaft in Christus Jesus entspricht."
-        <cite>— Philipper 2,5</cite>
       </blockquote>
+      <cite data-i18n="val_quote_ref" style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center; max-width: 600px; margin-inline: auto;">— Philipper 2,5</cite>
     </div>
   </section>
 
   <!-- FORMAT SECTION -->
   <section id="format">
     <div class="container">
-      <span class="section-label reveal">Wie wir uns treffen</span>
+      <span class="section-label reveal" data-i18n="fmt_label">Wie wir uns treffen</span>
       <div class="format-intro reveal">
-        <h2>Verschiedene Rahmen,<br>ein Ziel: <em>Verwandelt werden.</em></h2>
-        <p class="format-intro-text">Transformation geschieht nicht dadurch, dass wir eine Predigt hören und sie
-          anwenden. Jesus ist das fleischgewordene Wort – und in seiner Gegenwart werden wir verwandelt in dasselbe
-          Bild. Unsere Treffen sind deshalb nicht statisch, sondern so lebendig wie die Beziehungen, die sie tragen.</p>
+        <h2 data-i18n="fmt_title">Verschiedene Rahmen,<br>ein Ziel: <em>Verwandelt werden.</em></h2>
+        <p class="format-intro-text" data-i18n="fmt_desc">Transformation geschieht nicht dadurch, dass wir eine Predigt hören und sie anwenden. Jesus ist das fleischgewordene Wort – und in seiner Gegenwart werden wir verwandelt in dasselbe Bild. Unsere Treffen sind deshalb nicht statisch, sondern so lebendig wie die Beziehungen, die sie tragen.</p>
       </div>
       <div class="format-grid-wrapper">
         <div class="format-grid">
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
-            <h3>Abende</h3>
-            <p>Es gibt Abende, die alles verändern. Wenn Worship den Raum füllt, Gottes Wort lebendig wird und der
-              Heilige Geist anfängt zu wirken – dann gibt es keinen Abbruch. Wir bleiben, solange er da ist.</p>
+            <h3 data-i18n="fmt_1_title">Abende</h3>
+            <p data-i18n="fmt_1_desc">Es gibt Abende, die alles verändern. Wenn Worship den Raum füllt, Gottes Wort lebendig wird und der Heilige Geist anfängt zu wirken – dann gibt es keinen Abbruch. Wir bleiben, solange er da ist.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
-            <h3>Wochenenden & Tagungen</h3>
-            <p>Tage, an denen die Welt stehen bleibt. Intensiver Worship, Wahrheit die tief geht, Gebet, Handauflegung,
-              Impartation – an einem besonderen Ort, wo wir ganz bei Gott und beieinander sind. Und unterwegs immer auf
-              Mission, weil wir gar nicht anders können.</p>
+            <h3 data-i18n="fmt_2_title">Wochenenden & Tagungen</h3>
+            <p data-i18n="fmt_2_desc">Tage, an denen die Welt stehen bleibt. Intensiver Worship, Wahrheit die tief geht, Gebet, Handauflegung, Impartation – an einem besonderen Ort, wo wir ganz bei Gott und beieinander sind. Und unterwegs immer auf Mission, weil wir gar nicht anders können.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
-            <h3>Eins zu eins</h3>
-            <p>Die tiefsten Durchbrüche passieren oft nicht in großen Runden, sondern bei einem Spaziergang, einem
-              Kaffee, einer Sprachnachricht. Eins zu eins, von Herz zu Herz – da, wo Jüngerschaft wirklich lebt.</p>
+            <h3 data-i18n="fmt_3_title">Eins zu eins</h3>
+            <p data-i18n="fmt_3_desc">Die tiefsten Durchbrüche passieren oft nicht in großen Runden, sondern bei einem Spaziergang, einem Kaffee, einer Sprachnachricht. Eins zu eins, von Herz zu Herz – da, wo Jüngerschaft wirklich lebt.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
-            <h3>Online</h3>
-            <p>Manchmal trennen uns Kilometer, aber nie der Geist. Zoom-Sessions, Teachings und gemeinsames Gebet – weil
-              echte Gemeinschaft keine Grenzen kennt. Egal wo du bist, du kannst dabei sein.</p>
+            <h3 data-i18n="fmt_4_title">Online</h3>
+            <p data-i18n="fmt_4_desc">Manchmal trennen uns Kilometer, aber nie der Geist. Zoom-Sessions, Teachings und gemeinsames Gebet – weil echte Gemeinschaft keine Grenzen kennt. Egal wo du bist, du kannst dabei sein.</p>
           </div>
         </div>
         <div class="format-cta-row">
-          <button class="format-cta-btn" id="formatCtaBtn">[ Kontakt aufnehmen ]</button>
+          <button class="format-cta-btn" id="formatCtaBtn" data-i18n="fmt_btn">[ Kontakt aufnehmen ]</button>
         </div>
 
         <!-- KONTAKT POPUP OVERLAY -->
@@ -1370,27 +1382,26 @@
             <canvas id="popup-canvas"></canvas>
             <button class="format-popup-close" id="formatPopupClose">&times;</button>
             <div class="format-popup-content">
-              <h3>Lass uns in Kontakt kommen.</h3>
-              <p>Egal wo du stehst – schreib uns. Wir freuen uns, dich kennenzulernen.</p>
+              <h3 data-i18n="pop_title">Lass uns in Kontakt kommen.</h3>
+              <p data-i18n="pop_desc">Egal wo du stehst – schreib uns. Wir freuen uns, dich kennenzulernen.</p>
               <form class="format-popup-form" id="formatContactForm">
                 <div class="form-field">
-                  <label for="popup-name">Name *</label>
-                  <input type="text" id="popup-name" name="name" required placeholder="Dein Name" />
+                  <label for="popup-name" data-i18n="pop_lbl_name">Name *</label>
+                  <input type="text" id="popup-name" name="name" required placeholder="Dein Name" data-i18n-placeholder="pop_ph_name" />
                 </div>
                 <div class="form-field">
-                  <label for="popup-email">E-Mail *</label>
-                  <input type="email" id="popup-email" name="email" required placeholder="deine@email.de" />
+                  <label for="popup-email" data-i18n="pop_lbl_email">E-Mail *</label>
+                  <input type="email" id="popup-email" name="email" required placeholder="deine@email.de" data-i18n-placeholder="pop_ph_email" />
                 </div>
                 <div class="form-field">
-                  <label for="popup-phone">Telefon / WhatsApp <span class="optional">(optional)</span></label>
-                  <input type="text" id="popup-phone" name="phone" placeholder="+49 ..." />
+                  <label for="popup-phone" data-i18n="pop_lbl_phone">Telefon / WhatsApp <span class="optional">(optional)</span></label>
+                  <input type="text" id="popup-phone" name="phone" placeholder="+49 ..." data-i18n-placeholder="pop_ph_phone" />
                 </div>
                 <div class="form-field">
-                  <label for="popup-message">Nachricht <span class="optional">(optional)</span></label>
-                  <textarea id="popup-message" name="message" rows="3"
-                    placeholder="Was liegt dir auf dem Herzen?"></textarea>
+                  <label for="popup-message" data-i18n="pop_lbl_msg">Nachricht <span class="optional">(optional)</span></label>
+                  <textarea id="popup-message" name="message" rows="3" placeholder="Was liegt dir auf dem Herzen?" data-i18n-placeholder="pop_ph_msg"></textarea>
                 </div>
-                <button type="submit" class="format-popup-submit">Absenden</button>
+                <button type="submit" class="format-popup-submit" data-i18n="pop_btn">Absenden</button>
               </form>
             </div>
           </div>
@@ -1402,42 +1413,40 @@
   <!-- LEITERSCHAFT SECTION -->
   <section id="leiterschaft">
     <div class="container">
-      <span class="section-label reveal">Leiterschaftsentwicklung</span>
+      <span class="section-label reveal" data-i18n="ldr_label">Leiterschaftsentwicklung</span>
       <div class="leiterschaft-layout">
         <div class="leiterschaft-text reveal">
-          <h2>Wir rüsten <em>Leiter</em> zu.</h2>
-          <p>Sons of Zion bildet Pastoren, Missionare und Leiter aus – nicht in einem Programm, sondern in echter
-            Begleitung. Pastoral, prophetisch und gabenorientiert.</p>
-          <p>„Ihr werdet die Dinge tun, die ich getan habe, und noch größere." Was Jesus seinen Jüngern versprochen hat,
-            gilt auch für uns heute.</p>
+          <h2 data-i18n="ldr_title">Wir rüsten <em>Leiter</em> zu.</h2>
+          <p data-i18n="ldr_desc1">Sons of Zion bildet Pastoren, Missionare und Leiter aus – nicht in einem Programm, sondern in echter Begleitung. Pastoral, prophetisch und gabenorientiert.</p>
+          <p data-i18n="ldr_desc2">„Ihr werdet die Dinge tun, die ich getan habe, und noch größere." Was Jesus seinen Jüngern versprochen hat, gilt auch für uns heute.</p>
         </div>
         <div class="leiterschaft-areas">
           <div class="leiterschaft-area reveal">
             <span class="leiterschaft-icon">✦</span>
             <div>
-              <strong>Pastoral</strong>
-              <span>Hirtenherz entwickeln. Menschen begleiten. Gemeinde bauen.</span>
+              <strong data-i18n="ldr_1_title">Pastoral</strong>
+              <span data-i18n="ldr_1_desc">Hirtenherz entwickeln. Menschen begleiten. Gemeinde bauen.</span>
             </div>
           </div>
           <div class="leiterschaft-area reveal">
             <span class="leiterschaft-icon">✦</span>
             <div>
-              <strong>Prophetisch</strong>
-              <span>Gottes Stimme hören lernen. Im Geist unterscheiden. Mutig aussprechen.</span>
+              <strong data-i18n="ldr_2_title">Prophetisch</strong>
+              <span data-i18n="ldr_2_desc">Gottes Stimme hören lernen. Im Geist unterscheiden. Mutig aussprechen.</span>
             </div>
           </div>
           <div class="leiterschaft-area reveal">
             <span class="leiterschaft-icon">✦</span>
             <div>
-              <strong>Gabenorientiert</strong>
-              <span>Entdecken, was Gott in dich hineingelegt hat – und es zur Entfaltung bringen.</span>
+              <strong data-i18n="ldr_3_title">Gabenorientiert</strong>
+              <span data-i18n="ldr_3_desc">Entdecken, was Gott in dich hineingelegt hat – und es zur Entfaltung bringen.</span>
             </div>
           </div>
           <div class="leiterschaft-area reveal">
             <span class="leiterschaft-icon">✦</span>
             <div>
-              <strong>Identität</strong>
-              <span>Wissen, wer du in Christus bist. Falsche Mindsets ablegen. Denken wie der Sohn.</span>
+              <strong data-i18n="ldr_4_title">Identität</strong>
+              <span data-i18n="ldr_4_desc">Wissen, wer du in Christus bist. Falsche Mindsets ablegen. Denken wie der Sohn.</span>
             </div>
           </div>
         </div>
@@ -1448,30 +1457,27 @@
   <!-- QUOTE 2 -->
   <section id="quote2">
     <div class="container">
-      <blockquote class="quote-text reveal">
+      <blockquote class="quote-text reveal" data-i18n="quote_2">
         „Wir alle aber schauen mit aufgedecktem Angesicht die Herrlichkeit des Herrn an und werden so verwandelt in
         dasselbe Bild, von Herrlichkeit zu Herrlichkeit, <strong>wie durch den Geist des Herrn.</strong>"
-        <cite class="quote-ref">— 2. Korinther 3,18</cite>
       </blockquote>
+      <cite class="quote-ref" data-i18n="quote_2_ref">— 2. Korinther 3,18</cite>
     </div>
   </section>
 
   <!-- PORTRAIT SECTION -->
   <section id="portrait">
     <div class="container">
-      <span class="section-label reveal">Wer dahinter steht</span>
+      <span class="section-label reveal" data-i18n="port_label">Wer dahinter steht</span>
       <div class="portrait-layout">
         <div class="portrait-image reveal">
           <img src="assets/images/daniele-portrait.jpg" alt="Daniele Vitale" />
         </div>
         <div class="portrait-text">
-          <h2>Nicht eine<br>Organisation –<br><em>eine Berufung.</em></h2>
-          <p>Sons of Zion ist Teil von <strong>MANTD – Make All Nations to Disciples</strong>. Gegründet mit dem Auftrag
-            aus Matthäus 28: Das Evangelium von Jesus Christus an die Enden der Erde zu bringen.</p>
-          <p>Beginnend im deutschsprachigen und italienischen Raum – in Gemeinden, in Häusern, in echten Beziehungen.
-            Wie <strong>Paulus und Timotheus.</strong></p>
-          <p>Sons of Zion schafft den Raum dafür: Pastoren und Missionare werden nicht nur ausgebildet, sondern
-            persönlich begleitet. Nicht in einem Programm, sondern in <strong>echter Gemeinschaft.</strong></p>
+          <h2 data-i18n="port_title">Nicht eine<br>Organisation –<br><em>eine Berufung.</em></h2>
+          <p data-i18n="port_desc1">Sons of Zion ist Teil von <strong>MANTD – Make All Nations to Disciples</strong>. Gegründet mit dem Auftrag aus Matthäus 28: Das Evangelium von Jesus Christus an die Enden der Erde zu bringen.</p>
+          <p data-i18n="port_desc2">Beginnend im deutschsprachigen und italienischen Raum – in Gemeinden, in Häusern, in echten Beziehungen. Wie <strong>Paulus und Timotheus.</strong></p>
+          <p data-i18n="port_desc3">Sons of Zion schafft den Raum dafür: Pastoren und Missionare werden nicht nur ausgebildet, sondern persönlich begleitet. Nicht in einem Programm, sondern in <strong>echter Gemeinschaft.</strong></p>
         </div>
       </div>
     </div>
@@ -1480,53 +1486,48 @@
   <!-- FÜR WEN SECTION -->
   <section id="fuerwen">
     <div class="container">
-      <span class="section-label reveal">Für wen ist das?</span>
+      <span class="section-label reveal" data-i18n="for_label">Für wen ist das?</span>
       <div class="fuerwen-grid">
         <div class="fuerwen-item reveal">
-          <h3>Gläubige</h3>
-          <p>Die sich nach echtem Glauben sehnen – nicht nach Religion, sondern nach Beziehung zu Jesus und zur Gemeinde
-            Gottes.</p>
+          <h3 data-i18n="for_1_title">Gläubige</h3>
+          <p data-i18n="for_1_desc">Die sich nach echtem Glauben sehnen – nicht nach Religion, sondern nach Beziehung zu Jesus und zur Gemeinde Gottes.</p>
         </div>
         <div class="fuerwen-item reveal">
-          <h3>Junge Leiter</h3>
-          <p>Die ihr Leben dem Auftrag widmen wollen und Mentoren brauchen, um in ihrer Berufung zu wachsen.</p>
+          <h3 data-i18n="for_2_title">Junge Leiter</h3>
+          <p data-i18n="for_2_desc">Die ihr Leben dem Auftrag widmen wollen und Mentoren brauchen, um in ihrer Berufung zu wachsen.</p>
         </div>
         <div class="fuerwen-item reveal">
-          <h3>Pastoren</h3>
-          <p>Die ihre Gemeinde auf eine tiefere Ebene führen möchten – geprägt von Jüngerschaft, nicht von Programmen.
-          </p>
+          <h3 data-i18n="for_3_title">Pastoren</h3>
+          <p data-i18n="for_3_desc">Die ihre Gemeinde auf eine tiefere Ebene führen möchten – geprägt von Jüngerschaft, nicht von Programmen.</p>
         </div>
         <div class="fuerwen-item reveal">
-          <h3>Missionare</h3>
-          <p>Die sich ganz dem Auftrag Christi hingeben und dabei ausgebildet, zurüstet und persönlich begleitet werden
-            wollen.</p>
+          <h3 data-i18n="for_4_title">Missionare</h3>
+          <p data-i18n="for_4_desc">Die sich ganz dem Auftrag Christi hingeben und dabei ausgebildet, zurüstet und persönlich begleitet werden wollen.</p>
         </div>
       </div>
-      <blockquote class="fuerwen-verse reveal">
-        „Darum geht hin und macht zu Jüngern alle Völker: Tauft sie auf den Namen des Vaters und des Sohnes und des
-        Heiligen Geistes, und lehrt sie, alles zu bewahren, was ich euch geboten habe. Und siehe, ich bin bei euch alle
-        Tage bis an das Ende der Welt."
-        <cite>— Matthäus 28,19–20</cite>
+      <blockquote class="fuerwen-verse reveal" data-i18n="for_quote">
+        „Darum geht hin und macht zu Jüngern alle Völker: Tauft sie auf den Namen des Vaters und des Sohnes und des Heiligen Geistes, und lehrt sie, alles zu bewahren, was ich euch geboten habe. Und siehe, ich bin bei euch alle Tage bis an das Ende der Welt."
       </blockquote>
+      <cite data-i18n="for_quote_ref" style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center;">— Matthäus 28,19–20</cite>
     </div>
   </section>
 
   <!-- KONTAKT SECTION -->
   <section id="kontakt">
     <div class="container">
-      <span class="kontakt-eyebrow reveal">Bereit?</span>
-      <h2 class="kontakt-title reveal">
+      <span class="kontakt-eyebrow reveal" data-i18n="cta_label">Bereit?</span>
+      <h2 class="kontakt-title reveal" data-i18n="cta_title">
         Komm<br><em>dazu.</em>
       </h2>
-      <p class="kontakt-sub reveal">
+      <p class="kontakt-sub reveal" data-i18n="cta_desc">
         Kein Aufnahmeprozess. Kein Vorwissen nötig.<br>
         Egal, wie alt oder jung du bist – lass uns gemeinsam Beziehung bauen und so leben, wie Jesus gelebt hat.
       </p>
       <div class="kontakt-actions reveal">
-        <a href="mailto:info@sons-of-zion.org" target="_blank" class="btn-primary">Schreib uns</a>
-        <a href="https://www.mantd.org" target="_blank" class="btn-secondary">MANTD entdecken</a>
+        <a href="mailto:info@sons-of-zion.org" target="_blank" class="btn-primary" data-i18n="cta_btn1">Schreib uns</a>
+        <a href="https://www.mantd.org" target="_blank" class="btn-secondary" data-i18n="cta_btn2">MANTD entdecken</a>
       </div>
-      <div class="kontakt-address reveal">
+      <div class="kontakt-address reveal" data-i18n="cta_address">
         MANTD – Make All Nations to Disciples<br>
         Albert-Wasmer Str. 7 · 79725 Laufenburg · Deutschland<br>
         kontakt@mantd.org
@@ -1538,12 +1539,12 @@
   <footer>
     <div class="container"
       style="width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-      <span class="footer-brand">© 2026 Sons of Zion</span>
+      <span class="footer-brand" data-i18n="foot_copy">© 2026 Sons of Zion</span>
       <ul class="footer-links">
-        <li><a href="#vision">Vision</a></li>
-        <li><a href="#format">Formate</a></li>
-        <li><a href="#leiterschaft">Leiterschaft</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#vision" data-i18n="nav_vision">Vision</a></li>
+        <li><a href="#format" data-i18n="nav_formats">Formate</a></li>
+        <li><a href="#leiterschaft" data-i18n="nav_leadership">Leiterschaft</a></li>
+        <li><a href="#kontakt" data-i18n="nav_contact">Kontakt</a></li>
         <li><a href="https://www.mantd.org" target="_blank">MANTD</a></li>
       </ul>
       <span class="footer-mantd">Mt. 28:19</span>
@@ -1897,6 +1898,7 @@
       });
     });
   </script>
+  <script src="translations.js"></script>
 </body>
 
 </html>
