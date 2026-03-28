@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sons of Zion – Jüngerschaft, Leiterschaft, Beziehung</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ============================================
+       ROOT & VARIABLES
+       ============================================ */
+    :root {
+      --black: #000000;
+      --surface: #0a0a0a;
+      --card: #0f0f0f;
+      --gold: #c9a84c;
+      --gold-dim: #8b7a3a;
+      --gold-glow: rgba(201, 168, 76, 0.15);
+      --white: #f5f0e8;
+      --muted: #a8a29e;
+      --border: #1a1a1a;
+
+      --font-display: 'Cormorant Garamond', serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    /* ============================================
+       RESET & GLOBALS
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-mono);
+      background-color: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 3rem);
+    }
+
+    /* ============================================
+       CANVAS (PARTICLE BACKGROUND)
+       ============================================ */
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-color: var(--black);
+    }
+
+    /* ============================================
+       MOBILE MENU
+       ============================================ */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--black) 0%, var(--surface) 100%);
+      z-index: 999;
+      padding-top: 5rem;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.active {
+      left: 0;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      gap: 1rem;
+    }
+
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold);
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 1rem clamp(1.5rem, 5vw, 4rem);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .nav-logo {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 108px;
+      width: auto;
+      display: block;
+      filter: brightness(1.1);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      flex-shrink: 0;
+    }
+
+    .nav-cta a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      padding: 0.6rem 1.2rem;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .nav-cta a:hover {
+      background: rgba(201, 168, 76, 0.1);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 2px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ============================================
+       HERO SECTION
+       ============================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 6rem;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .hero-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 700px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 0.8rem 2rem;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .hero-cta:hover {
+      background: rgba(201, 168, 76, 0.1);
+      box-shadow: 0 0 30px var(--gold-glow);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 24px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(8px);
+      }
+    }
+
+    /* ============================================
+       QUOTE SECTION (GENERAL)
+       ============================================ */
+    .quote-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.8;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .quote-ref {
+      display: block;
+      margin-top: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ============================================
+       SECTION LABEL
+       ============================================ */
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: inline-block;
+    }
+
+    /* ============================================
+       QUOTE 1 SECTION (1. Korinther 2,9)
+       ============================================ */
+    #quote1 {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ============================================
+       VISION SECTION
+       ============================================ */
+    #vision {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .vision-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: clamp(2rem, 4vw, 4rem);
+      margin-top: 3rem;
+    }
+
+    .vision-item {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      position: relative;
+    }
+
+    .vision-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .vision-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .vision-item h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .vision-item p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* ============================================
+       KERNWERTE SECTION
+       ============================================ */
+    #kernwerte {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .kernwerte-values {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+
+    .kernwerte-value {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-style: italic;
+      color: var(--white);
+      padding: 0 clamp(1rem, 2.5vw, 2rem);
+      border-right: 1px solid var(--border);
+      line-height: 2;
+    }
+
+    .kernwerte-value:last-child {
+      border-right: none;
+    }
+
+    .kernwerte-verse {
+      font-family: var(--font-display);
+      font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+      font-style: italic;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .kernwerte-verse cite {
+      display: block;
+      margin-top: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    @media (max-width: 600px) {
+      .kernwerte-value {
+        padding: 0 0.8rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* ============================================
+       FORMAT SECTION
+       ============================================ */
+    #format {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .format-intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .format-intro h2 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .format-intro-text {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 2;
+      max-width: 640px;
+      margin-bottom: 3.5rem;
+    }
+
+    .format-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      border: 1px solid var(--border);
+    }
+
+    .format-card {
+      padding: clamp(2rem, 4vw, 3rem);
+      background: var(--card);
+      transition: background 0.3s;
+    }
+
+    .format-card:hover {
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .format-card-icon {
+      display: block;
+      color: var(--gold);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.2em;
+    }
+
+    .format-card h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .format-card p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    @media (max-width: 700px) {
+      .format-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Format Grid Wrapper */
+    .format-grid-wrapper {
+      position: relative;
+      min-height: 680px;
+    }
+
+    /* CTA Button unter den Kacheln */
+    .format-cta-row {
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .format-cta-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: transparent;
+      border: 1px solid var(--gold);
+      padding: 0.85rem 2.2rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+    }
+
+    .format-cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+      z-index: -1;
+    }
+
+    .format-cta-btn:hover {
+      color: var(--black);
+    }
+
+    .format-cta-btn:hover::before {
+      transform: translateX(0);
+    }
+
+    /* POPUP OVERLAY */
+    .format-popup-overlay {
+      display: flex;
+      /* Changed from none */
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      /* Nice blur */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+    }
+
+    .format-popup-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .format-popup {
+      width: 100%;
+      height: 100%;
+      background: var(--black);
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 30px var(--gold-glow);
+      padding: clamp(2rem, 5vw, 4rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.92) translateY(20px);
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .format-popup-overlay.open .format-popup {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    #popup-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .format-popup-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .format-popup-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-size: 2rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      line-height: 1;
+      z-index: 2;
+    }
+
+    .format-popup-close:hover {
+      opacity: 1;
+      color: var(--white);
+    }
+
+    .format-popup h3,
+    .format-popup .format-popup-content h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      text-align: center;
+    }
+
+    .format-popup>p,
+    .format-popup .format-popup-content>p {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .format-popup-form {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .form-field label .optional {
+      text-transform: none;
+      letter-spacing: 0;
+      opacity: 0.5;
+      color: var(--muted);
+    }
+
+    .form-field input,
+    .form-field textarea {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--white);
+      background: rgba(201, 168, 76, 0.05);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 0.75rem 1rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(245, 240, 232, 0.3);
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--gold);
+      background: rgba(201, 168, 76, 0.1);
+      box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .format-popup-submit {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .format-popup-submit:hover {
+      background: transparent;
+      color: var(--gold);
+      box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+    }
+
+    /* ============================================
+       LEITERSCHAFT SECTION
+       ============================================ */
+    #leiterschaft {
+      padding: clamp(5rem, 10vw, 9rem) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .leiterschaft-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .leiterschaft-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .leiterschaft-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--white);
+    }
+
+    .leiterschaft-text h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .leiterschaft-text p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.95;
+      margin-bottom: 1rem;
+    }
+
+    .leiterschaft-areas {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .leiterschaft-area {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .leiterschaft-area:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .leiterschaft-icon {
+      color: var(--gold);
+      font-size: 0.8rem;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .leiterschaft-area strong {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+      font-weight: 400;
+    }
+
+    .leiterschaft-area span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       QUOTE 2 SECTION (2. Korinther 3,18)
+       ============================================ */
+    #quote2 {
+      padding: clamp(4rem, 8vw, 7rem) 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ============================================
+       PORTRAIT SECTION
+       ============================================ */
+    #portrait {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .portrait-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .portrait-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .portrait-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portrait-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: grayscale(80%);
+      transition: filter 0.3s;
+    }
+
+    .portrait-image:hover img {
+      filter: grayscale(0%);
+    }
+
+    .portrait-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin: 1.5rem 0;
+      color: var(--white);
+    }
+
+    .portrait-text h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .portrait-text p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.95;
+      margin-bottom: 1rem;
+    }
+
+    .portrait-text strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ============================================
+       FÜR WEN SECTION
+       ============================================ */
+    #fuerwen {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .fuerwen-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: clamp(2rem, 4vw, 4rem);
+      margin: 3rem 0;
+    }
+
+    .fuerwen-item {
+      padding: 2rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .fuerwen-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .fuerwen-item h3 {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .fuerwen-item p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .fuerwen-verse {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 650px;
+      margin-inline: auto;
+    }
+
+    .fuerwen-verse cite {
+      display: block;
+      margin-top: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ============================================
+       KONTAKT SECTION
+       ============================================ */
+    #kontakt {
+      padding: clamp(5rem, 10vw, 8rem) 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .kontakt-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .kontakt-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    .kontakt-title em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .kontakt-sub {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .kontakt-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--gold);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      transition: opacity 0.2s;
+      font-weight: 400;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.85;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: 1px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+    }
+
+    .btn-secondary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+      z-index: -1;
+    }
+
+    .btn-secondary:hover {
+      color: var(--black);
+    }
+
+    .btn-secondary:hover::before {
+      transform: translateX(0);
+    }
+
+    .kontakt-address {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: rgba(245, 240, 232, 0.25);
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: clamp(2rem, 4vw, 4rem) 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold);
+    }
+
+    .footer-mantd {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 600px) {
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ============================================
+       REVEAL ANIMATION
+       ============================================ */
+    /* reveal class: initial state set by GSAP, not CSS */
+  </style>
+</head>
+
+<body>
+  <!-- CANVAS PARTICLE BACKGROUND -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="#vision">Vision</a></li>
+      <li><a href="#format">Formate</a></li>
+      <li><a href="#leiterschaft">Leiterschaft</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <img src="assets/images/sonsofzion-logo.jpg" alt="Sons of Zion Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#format">Formate</a></li>
+        <li><a href="#leiterschaft">Leiterschaft</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="mailto:info@sons-of-zion.org" target="_blank">[ Dazukommen ]</a>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero">
+    <h1 class="hero-title reveal">Werde wer du<br><em>wirklich bist</em></h1>
+    <p class="hero-subtitle reveal">
+      Ein transformierendes Netzwerk für Jüngerschaft,<br>
+      Leiterschaft und echte Beziehung.
+    </p>
+    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal">[ Dazukommen ]</a>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- QUOTE 1 -->
+  <section id="quote1">
+    <div class="container">
+      <blockquote class="quote-text reveal">
+        „Was kein Auge gesehen und kein Ohr gehört hat und in keines Menschen Herz gekommen ist, was Gott bereitet hat
+        denen, <strong>die ihn lieben.</strong>"
+        <cite class="quote-ref">— 1. Korinther 2,9</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- VISION SECTION -->
+  <section id="vision">
+    <div class="container">
+      <span class="section-label reveal">Unsere Vision</span>
+      <div class="vision-grid">
+        <div class="vision-item reveal">
+          <span class="vision-number">01</span>
+          <h3>Echte Beziehung</h3>
+          <p>Nicht Programme, sondern echtes Kennen. Echtes Interesse am Herzen des anderen – an dem, was Gott in deinem
+            Leben tun will. Beziehung auf Augenhöhe, mit Verantwortung füreinander.</p>
+        </div>
+        <div class="vision-item reveal">
+          <span class="vision-number">02</span>
+          <h3>Lebendige Jüngerschaft</h3>
+          <p>Jesus selbst ist unser Lehrer durch seinen Heiligen Geist. Kein festgefahrener Lehrplan, sondern eine
+            lebendige Schule. Nicht aus eigener Kraft, sondern durch sein Blut werden wir transformiert in dasselbe
+            Bild.</p>
+        </div>
+        <div class="vision-item reveal">
+          <span class="vision-number">03</span>
+          <h3>Identität in Christus</h3>
+          <p>Charakter. Gebet. Prophetie. Zurüstung. Wir entdecken gemeinsam, wer wir in Christus wirklich sind – und
+            gehen hinaus, um zu leuchten.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KERNWERTE SECTION -->
+  <section id="kernwerte">
+    <div class="container">
+      <div class="kernwerte-values reveal">
+        <div class="kernwerte-value">Freundschaft</div>
+        <div class="kernwerte-value">Tiefgang</div>
+        <div class="kernwerte-value">Wahrheit</div>
+        <div class="kernwerte-value">Authentizität</div>
+        <div class="kernwerte-value">Transformation</div>
+      </div>
+      <blockquote class="kernwerte-verse reveal">
+        „Seid so unter euch gesinnt, wie es der Gemeinschaft in Christus Jesus entspricht."
+        <cite>— Philipper 2,5</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- FORMAT SECTION -->
+  <section id="format">
+    <div class="container">
+      <span class="section-label reveal">Wie wir uns treffen</span>
+      <div class="format-intro reveal">
+        <h2>Verschiedene Rahmen,<br>ein Ziel: <em>Verwandelt werden.</em></h2>
+        <p class="format-intro-text">Transformation geschieht nicht dadurch, dass wir eine Predigt hören und sie
+          anwenden. Jesus ist das fleischgewordene Wort – und in seiner Gegenwart werden wir verwandelt in dasselbe
+          Bild. Unsere Treffen sind deshalb nicht statisch, sondern so lebendig wie die Beziehungen, die sie tragen.</p>
+      </div>
+      <div class="format-grid-wrapper">
+        <div class="format-grid">
+          <div class="format-card reveal">
+            <span class="format-card-icon">—</span>
+            <h3>Abende</h3>
+            <p>Es gibt Abende, die alles verändern. Wenn Worship den Raum füllt, Gottes Wort lebendig wird und der
+              Heilige Geist anfängt zu wirken – dann gibt es keinen Abbruch. Wir bleiben, solange er da ist.</p>
+          </div>
+          <div class="format-card reveal">
+            <span class="format-card-icon">—</span>
+            <h3>Wochenenden & Tagungen</h3>
+            <p>Tage, an denen die Welt stehen bleibt. Intensiver Worship, Wahrheit die tief geht, Gebet, Handauflegung,
+              Impartation – an einem besonderen Ort, wo wir ganz bei Gott und beieinander sind. Und unterwegs immer auf
+              Mission, weil wir gar nicht anders können.</p>
+          </div>
+          <div class="format-card reveal">
+            <span class="format-card-icon">—</span>
+            <h3>Eins zu eins</h3>
+            <p>Die tiefsten Durchbrüche passieren oft nicht in großen Runden, sondern bei einem Spaziergang, einem
+              Kaffee, einer Sprachnachricht. Eins zu eins, von Herz zu Herz – da, wo Jüngerschaft wirklich lebt.</p>
+          </div>
+          <div class="format-card reveal">
+            <span class="format-card-icon">—</span>
+            <h3>Online</h3>
+            <p>Manchmal trennen uns Kilometer, aber nie der Geist. Zoom-Sessions, Teachings und gemeinsames Gebet – weil
+              echte Gemeinschaft keine Grenzen kennt. Egal wo du bist, du kannst dabei sein.</p>
+          </div>
+        </div>
+        <div class="format-cta-row">
+          <button class="format-cta-btn" id="formatCtaBtn">[ Kontakt aufnehmen ]</button>
+        </div>
+
+        <!-- KONTAKT POPUP OVERLAY -->
+        <div class="format-popup-overlay" id="formatPopup">
+          <div class="format-popup">
+            <canvas id="popup-canvas"></canvas>
+            <button class="format-popup-close" id="formatPopupClose">&times;</button>
+            <div class="format-popup-content">
+              <h3>Lass uns in Kontakt kommen.</h3>
+              <p>Egal wo du stehst – schreib uns. Wir freuen uns, dich kennenzulernen.</p>
+              <form class="format-popup-form" id="formatContactForm">
+                <div class="form-field">
+                  <label for="popup-name">Name *</label>
+                  <input type="text" id="popup-name" name="name" required placeholder="Dein Name" />
+                </div>
+                <div class="form-field">
+                  <label for="popup-email">E-Mail *</label>
+                  <input type="email" id="popup-email" name="email" required placeholder="deine@email.de" />
+                </div>
+                <div class="form-field">
+                  <label for="popup-phone">Telefon / WhatsApp <span class="optional">(optional)</span></label>
+                  <input type="text" id="popup-phone" name="phone" placeholder="+49 ..." />
+                </div>
+                <div class="form-field">
+                  <label for="popup-message">Nachricht <span class="optional">(optional)</span></label>
+                  <textarea id="popup-message" name="message" rows="3"
+                    placeholder="Was liegt dir auf dem Herzen?"></textarea>
+                </div>
+                <button type="submit" class="format-popup-submit">Absenden</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.format-grid-wrapper -->
+    </div><!-- /.container -->
+  </section>
+
+  <!-- LEITERSCHAFT SECTION -->
+  <section id="leiterschaft">
+    <div class="container">
+      <span class="section-label reveal">Leiterschaftsentwicklung</span>
+      <div class="leiterschaft-layout">
+        <div class="leiterschaft-text reveal">
+          <h2>Wir rüsten <em>Leiter</em> zu.</h2>
+          <p>Sons of Zion bildet Pastoren, Missionare und Leiter aus – nicht in einem Programm, sondern in echter
+            Begleitung. Pastoral, prophetisch und gabenorientiert.</p>
+          <p>„Ihr werdet die Dinge tun, die ich getan habe, und noch größere." Was Jesus seinen Jüngern versprochen hat,
+            gilt auch für uns heute.</p>
+        </div>
+        <div class="leiterschaft-areas">
+          <div class="leiterschaft-area reveal">
+            <span class="leiterschaft-icon">✦</span>
+            <div>
+              <strong>Pastoral</strong>
+              <span>Hirtenherz entwickeln. Menschen begleiten. Gemeinde bauen.</span>
+            </div>
+          </div>
+          <div class="leiterschaft-area reveal">
+            <span class="leiterschaft-icon">✦</span>
+            <div>
+              <strong>Prophetisch</strong>
+              <span>Gottes Stimme hören lernen. Im Geist unterscheiden. Mutig aussprechen.</span>
+            </div>
+          </div>
+          <div class="leiterschaft-area reveal">
+            <span class="leiterschaft-icon">✦</span>
+            <div>
+              <strong>Gabenorientiert</strong>
+              <span>Entdecken, was Gott in dich hineingelegt hat – und es zur Entfaltung bringen.</span>
+            </div>
+          </div>
+          <div class="leiterschaft-area reveal">
+            <span class="leiterschaft-icon">✦</span>
+            <div>
+              <strong>Identität</strong>
+              <span>Wissen, wer du in Christus bist. Falsche Mindsets ablegen. Denken wie der Sohn.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE 2 -->
+  <section id="quote2">
+    <div class="container">
+      <blockquote class="quote-text reveal">
+        „Wir alle aber schauen mit aufgedecktem Angesicht die Herrlichkeit des Herrn an und werden so verwandelt in
+        dasselbe Bild, von Herrlichkeit zu Herrlichkeit, <strong>wie durch den Geist des Herrn.</strong>"
+        <cite class="quote-ref">— 2. Korinther 3,18</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- PORTRAIT SECTION -->
+  <section id="portrait">
+    <div class="container">
+      <span class="section-label reveal">Wer dahinter steht</span>
+      <div class="portrait-layout">
+        <div class="portrait-image reveal">
+          <img src="assets/images/daniele-portrait.jpg" alt="Daniele Vitale" />
+        </div>
+        <div class="portrait-text">
+          <h2>Nicht eine<br>Organisation –<br><em>eine Berufung.</em></h2>
+          <p>Sons of Zion ist Teil von <strong>MANTD – Make All Nations to Disciples</strong>. Gegründet mit dem Auftrag
+            aus Matthäus 28: Das Evangelium von Jesus Christus an die Enden der Erde zu bringen.</p>
+          <p>Beginnend im deutschsprachigen und italienischen Raum – in Gemeinden, in Häusern, in echten Beziehungen.
+            Wie <strong>Paulus und Timotheus.</strong></p>
+          <p>Sons of Zion schafft den Raum dafür: Pastoren und Missionare werden nicht nur ausgebildet, sondern
+            persönlich begleitet. Nicht in einem Programm, sondern in <strong>echter Gemeinschaft.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FÜR WEN SECTION -->
+  <section id="fuerwen">
+    <div class="container">
+      <span class="section-label reveal">Für wen ist das?</span>
+      <div class="fuerwen-grid">
+        <div class="fuerwen-item reveal">
+          <h3>Gläubige</h3>
+          <p>Die sich nach echtem Glauben sehnen – nicht nach Religion, sondern nach Beziehung zu Jesus und zur Gemeinde
+            Gottes.</p>
+        </div>
+        <div class="fuerwen-item reveal">
+          <h3>Junge Leiter</h3>
+          <p>Die ihr Leben dem Auftrag widmen wollen und Mentoren brauchen, um in ihrer Berufung zu wachsen.</p>
+        </div>
+        <div class="fuerwen-item reveal">
+          <h3>Pastoren</h3>
+          <p>Die ihre Gemeinde auf eine tiefere Ebene führen möchten – geprägt von Jüngerschaft, nicht von Programmen.
+          </p>
+        </div>
+        <div class="fuerwen-item reveal">
+          <h3>Missionare</h3>
+          <p>Die sich ganz dem Auftrag Christi hingeben und dabei ausgebildet, zurüstet und persönlich begleitet werden
+            wollen.</p>
+        </div>
+      </div>
+      <blockquote class="fuerwen-verse reveal">
+        „Darum geht hin und macht zu Jüngern alle Völker: Tauft sie auf den Namen des Vaters und des Sohnes und des
+        Heiligen Geistes, und lehrt sie, alles zu bewahren, was ich euch geboten habe. Und siehe, ich bin bei euch alle
+        Tage bis an das Ende der Welt."
+        <cite>— Matthäus 28,19–20</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- KONTAKT SECTION -->
+  <section id="kontakt">
+    <div class="container">
+      <span class="kontakt-eyebrow reveal">Bereit?</span>
+      <h2 class="kontakt-title reveal">
+        Komm<br><em>dazu.</em>
+      </h2>
+      <p class="kontakt-sub reveal">
+        Kein Aufnahmeprozess. Kein Vorwissen nötig.<br>
+        Egal, wie alt oder jung du bist – lass uns gemeinsam Beziehung bauen und so leben, wie Jesus gelebt hat.
+      </p>
+      <div class="kontakt-actions reveal">
+        <a href="mailto:info@sons-of-zion.org" target="_blank" class="btn-primary">Schreib uns</a>
+        <a href="https://www.mantd.org" target="_blank" class="btn-secondary">MANTD entdecken</a>
+      </div>
+      <div class="kontakt-address reveal">
+        MANTD – Make All Nations to Disciples<br>
+        Albert-Wasmer Str. 7 · 79725 Laufenburg · Deutschland<br>
+        kontakt@mantd.org
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container"
+      style="width: 100%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+      <span class="footer-brand">© 2026 Sons of Zion</span>
+      <ul class="footer-links">
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#format">Formate</a></li>
+        <li><a href="#leiterschaft">Leiterschaft</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="https://www.mantd.org" target="_blank">MANTD</a></li>
+      </ul>
+      <span class="footer-mantd">Mt. 28:19</span>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================
+    // PARTICLE CANVAS
+    // ============================================
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 100;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.2;
+        this.color = '#c9a84c';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+      }
+
+      draw() {
+        ctx.fillStyle = `rgba(201, 168, 76, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(201, 168, 76, ${0.1 * (1 - distance / 150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      drawConnections();
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // ============================================
+    // HAMBURGER MENU
+    // ============================================
+    const hamburger = document.querySelector('.hamburger');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+      });
+    });
+
+    // ============================================
+    // GSAP ANIMATIONS
+    // ============================================
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Set initial states for all reveal elements
+    gsap.set('.reveal', { opacity: 0, y: 30 });
+    gsap.set('.quote-text', { opacity: 0, scale: 0.97 });
+    gsap.set('.vision-item', { opacity: 0, y: 40 });
+    gsap.set('.kernwerte-value', { opacity: 0, scale: 0.9 });
+    gsap.set('.leiterschaft-area', { opacity: 0, x: 40 });
+
+    // Hero reveal animation
+    const heroElements = document.querySelectorAll('#hero .reveal');
+    heroElements.forEach((element, index) => {
+      gsap.to(element, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        delay: 0.3 + index * 0.15,
+        ease: 'power3.out',
+      });
+    });
+
+    // Scroll animations for all other reveal elements (not in hero)
+    document.querySelectorAll('.reveal').forEach(element => {
+      if (element.closest('#hero')) return; // skip hero elements
+      gsap.to(element, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          once: true,
+        }
+      });
+    });
+
+    // Quote animations
+    document.querySelectorAll('.quote-text').forEach(element => {
+      gsap.to(element, {
+        opacity: 1,
+        scale: 1,
+        duration: 1.1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 80%',
+          once: true,
+        }
+      });
+    });
+
+    // Vision items stagger
+    gsap.to('.vision-item', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#vision',
+        start: 'top 75%',
+        once: true,
+      }
+    });
+
+    // Kernwerte values stagger
+    gsap.to('.kernwerte-value', {
+      opacity: 1,
+      scale: 1,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#kernwerte',
+        start: 'top 75%',
+        once: true,
+      }
+    });
+
+    // Leiterschaft areas stagger
+    gsap.to('.leiterschaft-area', {
+      opacity: 1,
+      x: 0,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#leiterschaft',
+        start: 'top 75%',
+        once: true,
+      }
+    });
+
+    // Format cards stagger animation
+    gsap.set('.format-card', { opacity: 0, y: 30 });
+    gsap.to('.format-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      stagger: 0.12,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '#format .format-grid',
+        start: 'top 80%',
+        once: true,
+      }
+    });
+
+    // ============================================
+    // FORMAT CTA POPUP & INTENSE PARTICLES
+    // ============================================
+    const formatCtaBtn = document.getElementById('formatCtaBtn');
+    const formatPopup = document.getElementById('formatPopup');
+    const formatPopupClose = document.getElementById('formatPopupClose');
+    const popupCanvas = document.getElementById('popup-canvas');
+    const pCtx = popupCanvas.getContext('2d');
+
+    let popupParticles = [];
+    let popupAnimationId = null;
+
+    function resizePopupCanvas() {
+      if (!popupCanvas) return;
+      const rect = formatPopup.getBoundingClientRect();
+      popupCanvas.width = rect.width;
+      popupCanvas.height = rect.height;
+    }
+
+    class PopupParticle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * popupCanvas.width;
+        this.y = Math.random() * popupCanvas.height;
+        this.size = Math.random() * 2 + 0.5; // Wie Background
+        this.speedX = (Math.random() - 0.5) * 0.5; // Wie Background
+        this.speedY = (Math.random() - 0.5) * 0.5; // Wie Background
+        this.opacity = Math.random() * 0.8 + 0.2; // Heller
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > popupCanvas.width) this.x = 0;
+        if (this.x < 0) this.x = popupCanvas.width;
+        if (this.y > popupCanvas.height) this.y = 0;
+        if (this.y < 0) this.y = popupCanvas.height;
+      }
+      draw() {
+        pCtx.fillStyle = `rgba(201, 168, 76, ${this.opacity})`;
+        pCtx.beginPath();
+        pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.shadowBlur = 15;
+        pCtx.shadowColor = '#c9a84c';
+      }
+    }
+
+    function initPopupParticles() {
+      popupParticles = [];
+      const density = window.innerWidth < 700 ? 50 : 150; // Intensiver
+      for (let i = 0; i < density; i++) {
+        popupParticles.push(new PopupParticle());
+      }
+    }
+
+    function drawPopupConnections() {
+      pCtx.shadowBlur = 0;
+      for (let i = 0; i < popupParticles.length; i++) {
+        for (let j = i + 1; j < popupParticles.length; j++) {
+          const dx = popupParticles[i].x - popupParticles[j].x;
+          const dy = popupParticles[i].y - popupParticles[j].y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 100) {
+            pCtx.strokeStyle = `rgba(201, 168, 76, ${0.4 * (1 - distance / 100)})`; // Deutlicher
+            pCtx.lineWidth = 1; // Breiter
+            pCtx.beginPath();
+            pCtx.moveTo(popupParticles[i].x, popupParticles[i].y);
+            pCtx.lineTo(popupParticles[j].x, popupParticles[j].y);
+            pCtx.stroke();
+          }
+        }
+      }
+    }
+
+    function animatePopup() {
+      pCtx.clearRect(0, 0, popupCanvas.width, popupCanvas.height);
+      popupParticles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      popupAnimationId = requestAnimationFrame(animatePopup);
+    }
+
+    formatCtaBtn.addEventListener('click', () => {
+      formatPopup.classList.add('open');
+      resizePopupCanvas();
+      initPopupParticles();
+      animatePopup();
+    });
+
+    formatPopupClose.addEventListener('click', () => {
+      formatPopup.classList.remove('open');
+      cancelAnimationFrame(popupAnimationId);
+    });
+
+    // Close popup when clicking outside the form
+    formatPopup.addEventListener('click', (e) => {
+      if (e.target === formatPopup || e.target === popupCanvas) {
+        formatPopup.classList.remove('open');
+        cancelAnimationFrame(popupAnimationId);
+      }
+    });
+
+    // Form submit handler
+    document.getElementById('formatContactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // TODO: Form submission logic will be handled later
+    });
+
+    // ============================================
+    // SCROLL TO TOP ON LINK CLICK
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href !== '#' && document.querySelector(href)) {
+          e.preventDefault();
+          const element = document.querySelector(href);
+          const offsetTop = element.offsetTop - 120;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
