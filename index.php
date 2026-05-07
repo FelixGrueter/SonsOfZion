@@ -1,4 +1,5 @@
-<?php session_start(); $_SESSION['form_time'] = time(); ?>
+<?php session_start();
+$_SESSION['form_time'] = time(); ?>
 <!DOCTYPE html>
 <html lang="de">
 
@@ -1217,17 +1218,85 @@
     /* ============================================
        LANGUAGE SWITCHER
        ============================================ */
-    .lang-switcher { display: flex; align-items: center; gap: 2px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(240, 237, 232, 0.1); border-radius: 3px; padding: 3px; }
-    .lang-btn { display: flex; align-items: center; gap: 5px; padding: 0.35em 0.65em; border-radius: 2px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); background: transparent; border: none; cursor: pointer; transition: color 0.2s, background 0.2s; white-space: nowrap; }
-    .lang-btn:hover { color: var(--white); background: rgba(240, 237, 232, 0.08); }
-    .lang-btn.active { color: var(--black); background: var(--gold); font-weight: 700; }
-    .lang-flag { font-size: 1rem; line-height: 1; }
-    .lang-code { font-size: 0.7rem; letter-spacing: 0.06em; font-family: var(--font-mono); }
-    .lang-switcher--mobile { margin-right: auto; margin-left: 2rem; background: rgba(255, 255, 255, 0.05); border-color: rgba(240, 237, 232, 0.15); padding: 4px; gap: 4px; border-radius: 4px; display: inline-flex; }
-    .lang-switcher--mobile .lang-btn { padding: 0.55em 1em; font-size: 0.8rem; gap: 6px; }
-    .lang-switcher--mobile .lang-flag { font-size: 1.2rem; }
-    .lang-switcher--mobile .lang-code { font-size: 0.78rem; }
-    @media (max-width: 768px) { .nav-desktop-switcher { display: none; } }
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(240, 237, 232, 0.1);
+      border-radius: 3px;
+      padding: 3px;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.35em 0.65em;
+      border-radius: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover {
+      color: var(--white);
+      background: rgba(240, 237, 232, 0.08);
+    }
+
+    .lang-btn.active {
+      color: var(--black);
+      background: var(--gold);
+      font-weight: 700;
+    }
+
+    .lang-flag {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .lang-code {
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      font-family: var(--font-mono);
+    }
+
+    .lang-switcher--mobile {
+      margin-right: auto;
+      margin-left: 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(240, 237, 232, 0.15);
+      padding: 4px;
+      gap: 4px;
+      border-radius: 4px;
+      display: inline-flex;
+    }
+
+    .lang-switcher--mobile .lang-btn {
+      padding: 0.55em 1em;
+      font-size: 0.8rem;
+      gap: 6px;
+    }
+
+    .lang-switcher--mobile .lang-flag {
+      font-size: 1.2rem;
+    }
+
+    .lang-switcher--mobile .lang-code {
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 768px) {
+      .nav-desktop-switcher {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -1244,9 +1313,12 @@
       <li><a href="#kontakt" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="lang-switcher lang-switcher--mobile">
-      <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
-      <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span></button>
-      <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span class="lang-code">IT</span></button>
+      <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span
+          class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
+      <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span
+          class="lang-code">EN</span></button>
+      <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span
+          class="lang-code">IT</span></button>
     </div>
   </div>
 
@@ -1263,9 +1335,12 @@
         <li><a href="#kontakt" data-i18n="nav_contact">Kontakt</a></li>
       </ul>
       <div class="lang-switcher nav-desktop-switcher">
-        <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
-        <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span class="lang-code">EN</span></button>
-        <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span class="lang-code">IT</span></button>
+        <button class="lang-btn active" onclick="setLanguage('de')" data-lang="de"><span
+            class="lang-flag">🇩🇪</span><span class="lang-code">DE</span></button>
+        <button class="lang-btn" onclick="setLanguage('en')" data-lang="en"><span class="lang-flag">🇬🇧</span><span
+            class="lang-code">EN</span></button>
+        <button class="lang-btn" onclick="setLanguage('it')" data-lang="it"><span class="lang-flag">🇮🇹</span><span
+            class="lang-code">IT</span></button>
       </div>
       <div class="nav-cta">
         <a href="mailto:info@sons-of-zion.org" target="_blank" data-i18n="nav_join">[ Dazukommen ]</a>
@@ -1285,7 +1360,8 @@
       Ein transformierendes Netzwerk für Jüngerschaft,<br>
       Leiterschaft und echte Beziehung.
     </p>
-    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal" data-i18n="nav_join">[ Dazukommen ]</a>
+    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal" data-i18n="nav_join">[ Dazukommen
+      ]</a>
     <div class="scroll-indicator">
       <span data-i18n="hero_scroll">Scroll</span>
       <div class="scroll-line"></div>
@@ -1311,17 +1387,21 @@
         <div class="vision-item reveal">
           <span class="vision-number">01</span>
           <h3 data-i18n="vis_1_title">Echte Beziehung</h3>
-          <p data-i18n="vis_1_desc">Nicht Programme, sondern echtes Kennen. Echtes Interesse am Herzen des anderen – an dem, was Gott in deinem Leben tun will. Beziehung auf Augenhöhe, mit Verantwortung füreinander.</p>
+          <p data-i18n="vis_1_desc">Nicht Programme, sondern echtes Kennen. Echtes Interesse am Herzen des anderen – an
+            dem, was Gott in deinem Leben tun will. Beziehung auf Augenhöhe, mit Verantwortung füreinander.</p>
         </div>
         <div class="vision-item reveal">
           <span class="vision-number">02</span>
           <h3 data-i18n="vis_2_title">Lebendige Jüngerschaft</h3>
-          <p data-i18n="vis_2_desc">Jesus selbst ist unser Lehrer durch seinen Heiligen Geist. Kein festgefahrener Lehrplan, sondern eine lebendige Schule. Nicht aus eigener Kraft, sondern durch sein Blut werden wir transformiert in dasselbe Bild.</p>
+          <p data-i18n="vis_2_desc">Jesus selbst ist unser Lehrer durch seinen Heiligen Geist. Kein festgefahrener
+            Lehrplan, sondern eine lebendige Schule. Nicht aus eigener Kraft, sondern durch sein Blut werden wir
+            transformiert in dasselbe Bild.</p>
         </div>
         <div class="vision-item reveal">
           <span class="vision-number">03</span>
           <h3 data-i18n="vis_3_title">Identität in Christus</h3>
-          <p data-i18n="vis_3_desc">Charakter. Gebet. Prophetie. Zurüstung. Wir entdecken gemeinsam, wer wir in Christus wirklich sind – und gehen hinaus, um zu leuchten.</p>
+          <p data-i18n="vis_3_desc">Charakter. Gebet. Prophetie. Zurüstung. Wir entdecken gemeinsam, wer wir in Christus
+            wirklich sind – und gehen hinaus, um zu leuchten.</p>
         </div>
       </div>
     </div>
@@ -1340,7 +1420,9 @@
       <blockquote class="kernwerte-verse reveal" data-i18n="val_quote">
         „Seid so unter euch gesinnt, wie es der Gemeinschaft in Christus Jesus entspricht."
       </blockquote>
-      <cite data-i18n="val_quote_ref" style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center; max-width: 600px; margin-inline: auto;">— Philipper 2,5</cite>
+      <cite data-i18n="val_quote_ref"
+        style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center; max-width: 600px; margin-inline: auto;">—
+        Philipper 2,5</cite>
     </div>
   </section>
 
@@ -1350,29 +1432,40 @@
       <span class="section-label reveal" data-i18n="fmt_label">Wie wir uns treffen</span>
       <div class="format-intro reveal">
         <h2 data-i18n="fmt_title">Verschiedene Rahmen,<br>ein Ziel: <em>Verwandelt werden.</em></h2>
-        <p class="format-intro-text" data-i18n="fmt_desc">Transformation geschieht nicht dadurch, dass wir eine Predigt hören und sie anwenden. Jesus ist das fleischgewordene Wort – und in seiner Gegenwart werden wir verwandelt in dasselbe Bild. Unsere Treffen sind deshalb nicht statisch, sondern so lebendig wie die Beziehungen, die sie tragen.</p>
+        <p class="format-intro-text" data-i18n="fmt_desc">Transformation geschieht nicht dadurch, dass wir eine Predigt
+          hören und sie anwenden. Jesus ist das fleischgewordene Wort – und in seiner Gegenwart werden wir verwandelt in
+          dasselbe Bild. Unsere Treffen sind deshalb nicht statisch, sondern so lebendig wie die Beziehungen, die sie
+          tragen.</p>
       </div>
       <div class="format-grid-wrapper">
         <div class="format-grid">
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
             <h3 data-i18n="fmt_1_title">Abende</h3>
-            <p data-i18n="fmt_1_desc">Es gibt Abende, die alles verändern. Wenn Worship den Raum füllt, Gottes Wort lebendig wird und der Heilige Geist anfängt zu wirken – dann gibt es keinen Abbruch. Wir bleiben, solange er da ist.</p>
+            <p data-i18n="fmt_1_desc">Es gibt Abende, die alles verändern. Wenn Worship den Raum füllt, Gottes Wort
+              lebendig wird und der Heilige Geist anfängt zu wirken – dann gibt es keinen Abbruch. Wir bleiben, solange
+              er da ist.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
             <h3 data-i18n="fmt_2_title">Wochenenden & Tagungen</h3>
-            <p data-i18n="fmt_2_desc">Tage, an denen die Welt stehen bleibt. Intensiver Worship, Wahrheit die tief geht, Gebet, Handauflegung, Impartation – an einem besonderen Ort, wo wir ganz bei Gott und beieinander sind. Und unterwegs immer auf Mission, weil wir gar nicht anders können.</p>
+            <p data-i18n="fmt_2_desc">Tage, an denen die Welt stehen bleibt. Intensiver Worship, Wahrheit die tief geht,
+              Gebet, Handauflegung, Impartation – an einem besonderen Ort, wo wir ganz bei Gott und beieinander sind.
+              Und unterwegs immer auf Mission, weil wir gar nicht anders können.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
             <h3 data-i18n="fmt_3_title">Eins zu eins</h3>
-            <p data-i18n="fmt_3_desc">Die tiefsten Durchbrüche passieren oft nicht in großen Runden, sondern bei einem Spaziergang, einem Kaffee, einer Sprachnachricht. Eins zu eins, von Herz zu Herz – da, wo Jüngerschaft wirklich lebt.</p>
+            <p data-i18n="fmt_3_desc">Die tiefsten Durchbrüche passieren oft nicht in großen Runden, sondern bei einem
+              Spaziergang, einem Kaffee, einer Sprachnachricht. Eins zu eins, von Herz zu Herz – da, wo Jüngerschaft
+              wirklich lebt.</p>
           </div>
           <div class="format-card reveal">
             <span class="format-card-icon">—</span>
             <h3 data-i18n="fmt_4_title">Online</h3>
-            <p data-i18n="fmt_4_desc">Manchmal trennen uns Kilometer, aber nie der Geist. Zoom-Sessions, Teachings und gemeinsames Gebet – weil echte Gemeinschaft keine Grenzen kennt. Egal wo du bist, du kannst dabei sein.</p>
+            <p data-i18n="fmt_4_desc">Manchmal trennen uns Kilometer, aber nie der Geist. Zoom-Sessions, Teachings und
+              gemeinsames Gebet – weil echte Gemeinschaft keine Grenzen kennt. Egal wo du bist, du kannst dabei sein.
+            </p>
           </div>
         </div>
         <div class="format-cta-row">
@@ -1389,25 +1482,35 @@
               <p data-i18n="pop_desc">Egal wo du stehst – schreib uns. Wir freuen uns, dich kennenzulernen.</p>
               <form class="format-popup-form" id="formatContactForm">
                 <input type="hidden" name="form_type" value="contact">
-                <input type="text" name="website" id="website" style="display:none !important;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
+                <input type="text" name="website" id="website"
+                  style="display:none !important;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
                 <div class="form-field">
                   <label for="popup-name" data-i18n="pop_lbl_name">Name *</label>
-                  <input type="text" id="popup-name" name="name" required placeholder="Dein Name" data-i18n-placeholder="pop_ph_name" />
+                  <input type="text" id="popup-name" name="name" required placeholder="Dein Name"
+                    data-i18n-placeholder="pop_ph_name" />
                 </div>
                 <div class="form-field">
                   <label for="popup-email" data-i18n="pop_lbl_email">E-Mail *</label>
-                  <input type="email" id="popup-email" name="email" required placeholder="deine@email.de" data-i18n-placeholder="pop_ph_email" />
+                  <input type="email" id="popup-email" name="email" required placeholder="deine@email.de"
+                    data-i18n-placeholder="pop_ph_email" />
                 </div>
                 <div class="form-field">
-                  <label for="popup-phone" data-i18n="pop_lbl_phone">Telefon / WhatsApp <span class="optional">(optional)</span></label>
-                  <input type="text" id="popup-phone" name="phone" placeholder="+49 ..." data-i18n-placeholder="pop_ph_phone" />
+                  <label for="popup-phone" data-i18n="pop_lbl_phone">Telefon / WhatsApp <span
+                      class="optional">(optional)</span></label>
+                  <input type="text" id="popup-phone" name="phone" placeholder="+49 ..."
+                    data-i18n-placeholder="pop_ph_phone" />
                 </div>
                 <div class="form-field">
-                  <label for="popup-message" data-i18n="pop_lbl_msg">Nachricht <span class="optional">(optional)</span></label>
-                  <textarea id="popup-message" name="message" rows="3" placeholder="Was liegt dir auf dem Herzen?" data-i18n-placeholder="pop_ph_msg"></textarea>
+                  <label for="popup-message" data-i18n="pop_lbl_msg">Nachricht <span
+                      class="optional">(optional)</span></label>
+                  <textarea id="popup-message" name="message" rows="3" placeholder="Was liegt dir auf dem Herzen?"
+                    data-i18n-placeholder="pop_ph_msg"></textarea>
                 </div>
-                <div id="popupFeedback" style="display:none;padding:0.7rem 1rem;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.04em;text-align:center;border:1px solid;margin-top:0.5rem;"></div>
-                <button type="submit" id="formatContactSubmit" class="format-popup-submit" data-i18n="pop_btn">Absenden</button>
+                <div id="popupFeedback"
+                  style="display:none;padding:0.7rem 1rem;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.04em;text-align:center;border:1px solid;margin-top:0.5rem;">
+                </div>
+                <button type="submit" id="formatContactSubmit" class="format-popup-submit"
+                  data-i18n="pop_btn">Absenden</button>
               </form>
             </div>
           </div>
@@ -1423,8 +1526,10 @@
       <div class="leiterschaft-layout">
         <div class="leiterschaft-text reveal">
           <h2 data-i18n="ldr_title">Wir rüsten <em>Leiter</em> zu.</h2>
-          <p data-i18n="ldr_desc1">Sons of Zion bildet Pastoren, Missionare und Leiter aus – nicht in einem Programm, sondern in echter Begleitung. Pastoral, prophetisch und gabenorientiert.</p>
-          <p data-i18n="ldr_desc2">„Ihr werdet die Dinge tun, die ich getan habe, und noch größere." Was Jesus seinen Jüngern versprochen hat, gilt auch für uns heute.</p>
+          <p data-i18n="ldr_desc1">Sons of Zion bildet Pastoren, Missionare und Leiter aus – nicht in einem Programm,
+            sondern in echter Begleitung. Pastoral, prophetisch und gabenorientiert.</p>
+          <p data-i18n="ldr_desc2">„Ihr werdet die Dinge tun, die ich getan habe, und noch größere." Was Jesus seinen
+            Jüngern versprochen hat, gilt auch für uns heute.</p>
         </div>
         <div class="leiterschaft-areas">
           <div class="leiterschaft-area reveal">
@@ -1445,14 +1550,16 @@
             <span class="leiterschaft-icon">✦</span>
             <div>
               <strong data-i18n="ldr_3_title">Gabenorientiert</strong>
-              <span data-i18n="ldr_3_desc">Entdecken, was Gott in dich hineingelegt hat – und es zur Entfaltung bringen.</span>
+              <span data-i18n="ldr_3_desc">Entdecken, was Gott in dich hineingelegt hat – und es zur Entfaltung
+                bringen.</span>
             </div>
           </div>
           <div class="leiterschaft-area reveal">
             <span class="leiterschaft-icon">✦</span>
             <div>
               <strong data-i18n="ldr_4_title">Identität</strong>
-              <span data-i18n="ldr_4_desc">Wissen, wer du in Christus bist. Falsche Mindsets ablegen. Denken wie der Sohn.</span>
+              <span data-i18n="ldr_4_desc">Wissen, wer du in Christus bist. Falsche Mindsets ablegen. Denken wie der
+                Sohn.</span>
             </div>
           </div>
         </div>
@@ -1481,9 +1588,14 @@
         </div>
         <div class="portrait-text">
           <h2 data-i18n="port_title">Nicht eine<br>Organisation –<br><em>eine Berufung.</em></h2>
-          <p data-i18n="port_desc1">Sons of Zion ist Teil von <strong>MANTD – Make All Nations to Disciples</strong>. Gegründet mit dem Auftrag aus Matthäus 28: Das Evangelium von Jesus Christus an die Enden der Erde zu bringen.</p>
-          <p data-i18n="port_desc2">Beginnend im deutschsprachigen und italienischen Raum – in Gemeinden, in Häusern, in echten Beziehungen. Wie <strong>Paulus und Timotheus.</strong></p>
-          <p data-i18n="port_desc3">Sons of Zion schafft den Raum dafür: Pastoren und Missionare werden nicht nur ausgebildet, sondern persönlich begleitet. Nicht in einem Programm, sondern in <strong>echter Gemeinschaft.</strong></p>
+          <p data-i18n="port_desc1">Sons of Zion ist Teil von <strong>MANTD – Make All Nations to Disciples</strong>.
+            Gegründet mit dem Auftrag aus Matthäus 28: Das Evangelium von Jesus Christus an die Enden der Erde zu
+            bringen.</p>
+          <p data-i18n="port_desc2">Beginnend im deutschsprachigen und italienischen Raum – in Gemeinden, in Häusern, in
+            echten Beziehungen. Wie <strong>Paulus und Timotheus.</strong></p>
+          <p data-i18n="port_desc3">Sons of Zion schafft den Raum dafür: Pastoren und Missionare werden nicht nur
+            ausgebildet, sondern persönlich begleitet. Nicht in einem Programm, sondern in <strong>echter
+              Gemeinschaft.</strong></p>
         </div>
       </div>
     </div>
@@ -1496,25 +1608,33 @@
       <div class="fuerwen-grid">
         <div class="fuerwen-item reveal">
           <h3 data-i18n="for_1_title">Gläubige</h3>
-          <p data-i18n="for_1_desc">Die sich nach echtem Glauben sehnen – nicht nach Religion, sondern nach Beziehung zu Jesus und zur Gemeinde Gottes.</p>
+          <p data-i18n="for_1_desc">Die sich nach echtem Glauben sehnen – nicht nach Religion, sondern nach Beziehung zu
+            Jesus und zur Gemeinde Gottes.</p>
         </div>
         <div class="fuerwen-item reveal">
           <h3 data-i18n="for_2_title">Junge Leiter</h3>
-          <p data-i18n="for_2_desc">Die ihr Leben dem Auftrag widmen wollen und Mentoren brauchen, um in ihrer Berufung zu wachsen.</p>
+          <p data-i18n="for_2_desc">Die ihr Leben dem Auftrag widmen wollen und Mentoren brauchen, um in ihrer Berufung
+            zu wachsen.</p>
         </div>
         <div class="fuerwen-item reveal">
           <h3 data-i18n="for_3_title">Pastoren</h3>
-          <p data-i18n="for_3_desc">Die ihre Gemeinde auf eine tiefere Ebene führen möchten – geprägt von Jüngerschaft, nicht von Programmen.</p>
+          <p data-i18n="for_3_desc">Die ihre Gemeinde auf eine tiefere Ebene führen möchten – geprägt von Jüngerschaft,
+            nicht von Programmen.</p>
         </div>
         <div class="fuerwen-item reveal">
           <h3 data-i18n="for_4_title">Missionare</h3>
-          <p data-i18n="for_4_desc">Die sich ganz dem Auftrag Christi hingeben und dabei ausgebildet, zurüstet und persönlich begleitet werden wollen.</p>
+          <p data-i18n="for_4_desc">Die sich ganz dem Auftrag Christi hingeben und dabei ausgebildet, zurüstet und
+            persönlich begleitet werden wollen.</p>
         </div>
       </div>
       <blockquote class="fuerwen-verse reveal" data-i18n="for_quote">
-        „Darum geht hin und macht zu Jüngern alle Völker: Tauft sie auf den Namen des Vaters und des Sohnes und des Heiligen Geistes, und lehrt sie, alles zu bewahren, was ich euch geboten habe. Und siehe, ich bin bei euch alle Tage bis an das Ende der Welt."
+        „Darum geht hin und macht zu Jüngern alle Völker: Tauft sie auf den Namen des Vaters und des Sohnes und des
+        Heiligen Geistes, und lehrt sie, alles zu bewahren, was ich euch geboten habe. Und siehe, ich bin bei euch alle
+        Tage bis an das Ende der Welt."
       </blockquote>
-      <cite data-i18n="for_quote_ref" style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center;">— Matthäus 28,19–20</cite>
+      <cite data-i18n="for_quote_ref"
+        style="display: block; margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-style: normal; text-align: center;">—
+        Matthäus 28,19–20</cite>
     </div>
   </section>
 
@@ -1535,8 +1655,7 @@
       </div>
       <div class="kontakt-address reveal" data-i18n="cta_address">
         MANTD – Make All Nations to Disciples<br>
-        Albert-Wasmer Str. 7 · 79725 Laufenburg · Deutschland<br>
-        kontakt@mantd.org
+        www.mantd.org
       </div>
     </div>
   </section>
@@ -1894,14 +2013,14 @@
     document.getElementById('formatContactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const form      = e.target;
+      const form = e.target;
       const submitBtn = document.getElementById('formatContactSubmit');
-      const feedback  = document.getElementById('popupFeedback');
-      const lang      = document.documentElement.lang || 'de';
+      const feedback = document.getElementById('popupFeedback');
+      const lang = document.documentElement.lang || 'de';
 
       const sendingText = { de: 'Wird gesendet…', en: 'Sending…', it: 'Invio…' };
-      const submitText  = { de: 'Absenden', en: 'Submit', it: 'Invia' };
-      const okText      = {
+      const submitText = { de: 'Absenden', en: 'Submit', it: 'Invia' };
+      const okText = {
         de: 'Deine Nachricht wurde erfolgreich versendet!',
         en: 'Your message was sent successfully!',
         it: 'Il tuo messaggio è stato inviato con successo!'
@@ -1923,16 +2042,16 @@
       feedback.style.display = 'none';
 
       try {
-        const res  = await fetch('contact.php', { method: 'POST', body: new FormData(form) });
+        const res = await fetch('contact.php', { method: 'POST', body: new FormData(form) });
         const data = await res.json();
 
         feedback.style.display = 'block';
 
         if (data.success) {
-          feedback.style.background  = 'rgba(201,168,76,0.08)';
+          feedback.style.background = 'rgba(201,168,76,0.08)';
           feedback.style.borderColor = 'rgba(201,168,76,0.5)';
-          feedback.style.color       = '#c9a84c';
-          feedback.textContent       = okText[lang] || okText.de;
+          feedback.style.color = '#c9a84c';
+          feedback.textContent = okText[lang] || okText.de;
 
           // Auto-close nach 3s
           setTimeout(() => {
@@ -1942,22 +2061,22 @@
             feedback.style.display = 'none';
           }, 3000);
         } else {
-          feedback.style.background  = 'rgba(200,60,60,0.08)';
+          feedback.style.background = 'rgba(200,60,60,0.08)';
           feedback.style.borderColor = 'rgba(200,60,60,0.4)';
-          feedback.style.color       = '#e07070';
-          feedback.textContent       = data.message || errText[lang] || errText.de;
+          feedback.style.color = '#e07070';
+          feedback.textContent = data.message || errText[lang] || errText.de;
         }
 
       } catch (err) {
-        feedback.style.display     = 'block';
-        feedback.style.background  = 'rgba(200,60,60,0.08)';
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(200,60,60,0.08)';
         feedback.style.borderColor = 'rgba(200,60,60,0.4)';
-        feedback.style.color       = '#e07070';
-        feedback.textContent       = netText[lang] || netText.de;
+        feedback.style.color = '#e07070';
+        feedback.textContent = netText[lang] || netText.de;
 
       } finally {
-        submitBtn.disabled     = false;
-        submitBtn.textContent  = submitText[lang] || submitText.de;
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitText[lang] || submitText.de;
       }
     });
 
