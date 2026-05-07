@@ -1343,7 +1343,7 @@ $_SESSION['form_time'] = time(); ?>
             class="lang-code">IT</span></button>
       </div>
       <div class="nav-cta">
-        <a href="mailto:info@sons-of-zion.org" target="_blank" data-i18n="nav_join">[ Dazukommen ]</a>
+        <a href="#format" onclick="openContactPopup(event)" data-i18n="nav_join">[ Dazukommen ]</a>
       </div>
       <div class="hamburger">
         <span></span>
@@ -1360,8 +1360,7 @@ $_SESSION['form_time'] = time(); ?>
       Ein transformierendes Netzwerk für Jüngerschaft,<br>
       Leiterschaft und echte Beziehung.
     </p>
-    <a href="mailto:info@sons-of-zion.org" target="_blank" class="hero-cta reveal" data-i18n="nav_join">[ Dazukommen
-      ]</a>
+    <a href="#format" onclick="openContactPopup(event)" class="hero-cta reveal" data-i18n="nav_join">[ Dazukommen ]</a>
     <div class="scroll-indicator">
       <span data-i18n="hero_scroll">Scroll</span>
       <div class="scroll-line"></div>
@@ -1650,7 +1649,7 @@ $_SESSION['form_time'] = time(); ?>
         Egal, wie alt oder jung du bist – lass uns gemeinsam Beziehung bauen und so leben, wie Jesus gelebt hat.
       </p>
       <div class="kontakt-actions reveal">
-        <a href="mailto:info@sons-of-zion.org" target="_blank" class="btn-primary" data-i18n="cta_btn1">Schreib uns</a>
+        <a href="#format" onclick="openContactPopup(event)" class="btn-primary" data-i18n="cta_btn1">Schreib uns</a>
         <a href="https://www.mantd.org" target="_blank" class="btn-secondary" data-i18n="cta_btn2">MANTD entdecken</a>
       </div>
       <div class="kontakt-address reveal" data-i18n="cta_address">
@@ -1985,6 +1984,21 @@ $_SESSION['form_time'] = time(); ?>
       initPopupParticles();
       animatePopup();
     });
+
+    // Öffnet das Kontaktformular von extern (Nav, Hero, CTA)
+    function openContactPopup(e) {
+      if (e) e.preventDefault();
+      const section = document.getElementById('format');
+      const offsetTop = section.offsetTop - 120;
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      // Nach Scroll-Animation Popup öffnen
+      setTimeout(() => {
+        formatPopup.classList.add('open');
+        resizePopupCanvas();
+        initPopupParticles();
+        animatePopup();
+      }, 550);
+    }
 
     formatPopupClose.addEventListener('click', () => {
       formatPopup.classList.remove('open');
