@@ -1,3 +1,4 @@
+<?php session_start(); $_SESSION['form_time'] = time(); ?>
 <!DOCTYPE html>
 <html lang="de">
 
@@ -1387,6 +1388,8 @@
               <h3 data-i18n="pop_title">Lass uns in Kontakt kommen.</h3>
               <p data-i18n="pop_desc">Egal wo du stehst – schreib uns. Wir freuen uns, dich kennenzulernen.</p>
               <form class="format-popup-form" id="formatContactForm">
+                <input type="hidden" name="form_type" value="contact">
+                <input type="text" name="website" id="website" style="display:none !important;position:absolute;left:-9999px;" tabindex="-1" autocomplete="off">
                 <div class="form-field">
                   <label for="popup-name" data-i18n="pop_lbl_name">Name *</label>
                   <input type="text" id="popup-name" name="name" required placeholder="Dein Name" data-i18n-placeholder="pop_ph_name" />
@@ -1403,7 +1406,8 @@
                   <label for="popup-message" data-i18n="pop_lbl_msg">Nachricht <span class="optional">(optional)</span></label>
                   <textarea id="popup-message" name="message" rows="3" placeholder="Was liegt dir auf dem Herzen?" data-i18n-placeholder="pop_ph_msg"></textarea>
                 </div>
-                <button type="submit" class="format-popup-submit" data-i18n="pop_btn">Absenden</button>
+                <div id="popupFeedback" style="display:none;padding:0.7rem 1rem;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.04em;text-align:center;border:1px solid;margin-top:0.5rem;"></div>
+                <button type="submit" id="formatContactSubmit" class="format-popup-submit" data-i18n="pop_btn">Absenden</button>
               </form>
             </div>
           </div>
@@ -1876,10 +1880,85 @@
       }
     });
 
-    // Form submit handler
-    document.getElementById('formatContactForm').addEventListener('submit', (e) => {
+    // Close popup via Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && formatPopup.classList.contains('open')) {
+        formatPopup.classList.remove('open');
+        cancelAnimationFrame(popupAnimationId);
+      }
+    });
+
+    // ============================================
+    // FORM SUBMIT (fetch)
+    // ============================================
+    document.getElementById('formatContactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      // TODO: Form submission logic will be handled later
+
+      const form      = e.target;
+      const submitBtn = document.getElementById('formatContactSubmit');
+      const feedback  = document.getElementById('popupFeedback');
+      const lang      = document.documentElement.lang || 'de';
+
+      const sendingText = { de: 'Wird gesendet…', en: 'Sending…', it: 'Invio…' };
+      const submitText  = { de: 'Absenden', en: 'Submit', it: 'Invia' };
+      const okText      = {
+        de: 'Deine Nachricht wurde erfolgreich versendet!',
+        en: 'Your message was sent successfully!',
+        it: 'Il tuo messaggio è stato inviato con successo!'
+      };
+      const errText = {
+        de: 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
+        en: 'An error occurred. Please try again.',
+        it: 'Si è verificato un errore. Riprova.'
+      };
+      const netText = {
+        de: 'Netzwerkfehler. Bitte versuche es erneut.',
+        en: 'Network error. Please try again.',
+        it: 'Errore di rete. Riprova.'
+      };
+
+      // Button: disabled + loading text
+      submitBtn.disabled = true;
+      submitBtn.textContent = sendingText[lang] || sendingText.de;
+      feedback.style.display = 'none';
+
+      try {
+        const res  = await fetch('contact.php', { method: 'POST', body: new FormData(form) });
+        const data = await res.json();
+
+        feedback.style.display = 'block';
+
+        if (data.success) {
+          feedback.style.background  = 'rgba(201,168,76,0.08)';
+          feedback.style.borderColor = 'rgba(201,168,76,0.5)';
+          feedback.style.color       = '#c9a84c';
+          feedback.textContent       = okText[lang] || okText.de;
+
+          // Auto-close nach 3s
+          setTimeout(() => {
+            formatPopup.classList.remove('open');
+            cancelAnimationFrame(popupAnimationId);
+            form.reset();
+            feedback.style.display = 'none';
+          }, 3000);
+        } else {
+          feedback.style.background  = 'rgba(200,60,60,0.08)';
+          feedback.style.borderColor = 'rgba(200,60,60,0.4)';
+          feedback.style.color       = '#e07070';
+          feedback.textContent       = data.message || errText[lang] || errText.de;
+        }
+
+      } catch (err) {
+        feedback.style.display     = 'block';
+        feedback.style.background  = 'rgba(200,60,60,0.08)';
+        feedback.style.borderColor = 'rgba(200,60,60,0.4)';
+        feedback.style.color       = '#e07070';
+        feedback.textContent       = netText[lang] || netText.de;
+
+      } finally {
+        submitBtn.disabled     = false;
+        submitBtn.textContent  = submitText[lang] || submitText.de;
+      }
     });
 
     // ============================================

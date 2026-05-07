@@ -50,6 +50,9 @@ const languageData = {
         pop_lbl_phone: "Phone / WhatsApp <span class=\"optional\">(optional)</span>",
         pop_lbl_msg: "Message <span class=\"optional\">(optional)</span>",
         pop_btn: "Submit",
+        pop_btn_sending: "Sending…",
+        pop_feedback_ok: "Your message was sent successfully!",
+        pop_feedback_err: "An error occurred. Please try again.",
 
         ldr_label: "Leadership Development",
         ldr_title: "We equip <em>leaders</em>.",
@@ -145,6 +148,9 @@ const languageData = {
         pop_lbl_phone: "Telefon / WhatsApp <span class=\"optional\">(optional)</span>",
         pop_lbl_msg: "Nachricht <span class=\"optional\">(optional)</span>",
         pop_btn: "Absenden",
+        pop_btn_sending: "Wird gesendet…",
+        pop_feedback_ok: "Deine Nachricht wurde erfolgreich versendet!",
+        pop_feedback_err: "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
 
         ldr_label: "Leiterschaftsentwicklung",
         ldr_title: "Wir rüsten <em>Leiter</em> zu.",
@@ -240,6 +246,9 @@ const languageData = {
         pop_lbl_phone: "Telefono / WhatsApp <span class=\"optional\">(opzionale)</span>",
         pop_lbl_msg: "Messaggio <span class=\"optional\">(opzionale)</span>",
         pop_btn: "Invia",
+        pop_btn_sending: "Invio…",
+        pop_feedback_ok: "Il tuo messaggio è stato inviato con successo!",
+        pop_feedback_err: "Si è verificato un errore. Riprova.",
 
         ldr_label: "Sviluppo della Leadership",
         ldr_title: "Equipaggiamo i <em>leader</em>.",
