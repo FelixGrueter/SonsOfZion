@@ -5,3 +5,4 @@ node_modules/
 .tmp/
 credentials.json
 token.json
+deploy-dev.sh
