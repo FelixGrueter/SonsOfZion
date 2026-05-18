@@ -6,3 +6,9 @@ node_modules/
 credentials.json
 token.json
 deploy-dev.sh
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
